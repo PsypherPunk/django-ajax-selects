@@ -15,7 +15,7 @@
         }
         $this.val(ui.item.pk);
         $text.val('');
-        addKiller(ui.item.repr, ui.item.pk);
+        addKiller(ui.item.repr);
         $deck.trigger('added', [ui.item.pk, ui.item]);
         $this.trigger('change');
 
@@ -24,7 +24,7 @@
 
       function addKiller(repr, pk) {
         var killId = 'kill_' + pk + id,
-            killButton = '<span class="ui-icon ui-icon-trash" id="' + killId + '">X</span> ';
+            killButton = '<span class="glyphicon glyphicon-trash" id="' + killId + '"></span> ';
         if (repr) {
           $deck.empty();
           $deck.append('<div>' + killButton + repr + '</div>');
@@ -90,8 +90,8 @@
 
       function addKiller(repr, pk) {
         var killId = 'kill_' + pk + id,
-            killButton = '<span class="ui-icon ui-icon-trash" id="' + killId + '">X</span> ';
-        $deck.append('<div id="' + id + '_on_deck_' + pk + '">' + killButton + repr + ' </div>');
+            killButton = '<span class="glyphicon glyphicon-trash" id="' + killId + '"></span> ';
+        $deck.append('<li class="list-group-item" id="' + id + '_on_deck_' + pk + '">' + killButton + repr + ' </li>');
 
         $('#' + killId).click(function() {
           kill(pk);
@@ -179,9 +179,11 @@
       }
     },
     _renderItem: function(ul, item) {
-      var body = this.options.html ? item.match: item.label;
+      var body = this.options.html ? item.repr : item.label;
+      ul.attr("class", "list-group");
       return $('<li></li>')
         .data('item.autocomplete', item)
+        .attr("class", "list-group-item")
         .append($('<a></a>')[this.options.html ? 'html' : 'text' ](body))
         .appendTo(ul);
     }
